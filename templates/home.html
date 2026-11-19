@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% block body %}
+<section class="hero"><div class="container position-relative" style="z-index:1"><div class="row align-items-center g-4">
+<div class="col-lg-6 text-center text-lg-start"><h1 class="display-5">Aapla Kabanur</h1>
+<p class="lead fs-4">आपलं गाव, आपला अभिमान!</p>
+<p>Pay taxes, register complaints, apply for certificates and explore village services — all in one place.</p>
+<a href="/login" class="btn btn-gold btn-lg me-2 mb-2"><i class="fa-solid fa-indian-rupee-sign me-2"></i>Pay tax</a>
+<a href="/register" class="btn btn-outline-light btn-lg mb-2"><i class="fa-solid fa-user-plus me-2"></i>Create account</a>
+<div class="wx mt-3 mx-auto mx-lg-0" data-wx data-lat="{{ WX.lat }}" data-lon="{{ WX.lon }}" data-place="{{ WX.place }}">Loading weather…</div></div>
+<div class="col-lg-6 text-center"><img src="{{ url_for('static',filename='logo.png') }}" alt="Aapla Kabanur logo"></div></div></div></section>
+<div class="container py-5"><h2 class="text-center mb-4">Village services</h2><div class="row g-3 g-md-4">
+{% for k,v in SECTIONS.items() %}<div class="col-6 col-md-4 col-lg-3"><a class="svc" href="{{ url_for('section',key=k) }}"><i class="fa-solid {{ v[1] }}"></i><b>{{ v[0] }}</b></a></div>{% endfor %}
+<div class="col-6 col-md-4 col-lg-3"><a class="svc" href="/dashboard"><i class="fa-solid fa-receipt"></i><b>Online Tax</b></a></div>
+<div class="col-6 col-md-4 col-lg-3"><a class="svc" href="/dashboard"><i class="fa-solid fa-triangle-exclamation"></i><b>Complaints</b></a></div>
+<div class="col-6 col-md-4 col-lg-3"><a class="svc" href="/dashboard"><i class="fa-solid fa-certificate"></i><b>Certificates</b></a></div></div></div>
+<div class="container"><h3 class="mb-3"><i class="fa-solid fa-bullhorn me-2 text-success"></i>Latest announcements</h3><div class="row g-3">
+{% for n in news %}<div class="col-md-4"><div class="card card-g p-3 h-100"><h5>{{ n.title }}</h5><p class="mb-0 small">{{ n.body }}</p></div></div>{% else %}<p>No announcements yet.</p>{% endfor %}</div></div>
+{% endblock %}

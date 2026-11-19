@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}Register{% endblock %}{% block body %}
+<div class="container py-4"><div class="row justify-content-center"><div class="col-md-8 col-lg-6"><div class="card card-g p-4"><h4 class="mb-3"><i class="fa-solid fa-user-plus me-2 text-success"></i>Citizen registration</h4>
+<form method="post" class="row g-3"><div class="col-sm-6"><label class="form-label">Full name</label><input class="form-control" name="name" required></div>
+<div class="col-sm-6"><label class="form-label">Phone</label><input class="form-control" name="phone" pattern="[0-9]{10}" required></div>
+<div class="col-sm-6"><label class="form-label">House number</label><input class="form-control" name="house_no" required></div>
+<div class="col-sm-6"><label class="form-label">Username</label><input class="form-control" name="username" required></div>
+<div class="col-12"><label class="form-label">Address</label><input class="form-control" name="address"></div>
+<div class="col-12"><label class="form-label">Password</label><input class="form-control" type="password" name="password" minlength="6" required></div>
+<div class="col-12"><button class="btn btn-em w-100">Create account</button></div></form></div></div></div></div>{% endblock %}

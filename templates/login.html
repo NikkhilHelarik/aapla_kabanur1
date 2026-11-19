@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block title %}Login{% endblock %}{% block body %}
+<div class="container py-4"><div class="row justify-content-center"><div class="col-md-6 col-lg-4"><div class="card card-g p-4">
+<div class="text-center"><img src="{{ url_for('static',filename='logo.png') }}" width="170" alt=""></div><h4 class="text-center mb-3">Login</h4>
+<form method="post"><div class="input-group mb-3"><span class="input-group-text"><i class="fa-solid fa-user"></i></span><input class="form-control" name="username" placeholder="Username" required autofocus></div>
+<div class="input-group mb-3"><span class="input-group-text"><i class="fa-solid fa-lock"></i></span><input class="form-control" type="password" name="password" placeholder="Password" required></div>
+<button class="btn btn-em w-100">Login</button></form><p class="text-center mt-3 mb-0 small">New here? <a href="/register">Create an account</a></p></div></div></div></div>{% endblock %}

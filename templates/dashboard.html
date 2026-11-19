@@ -1,0 +1,19 @@
+{% extends "base.html" %}{% block title %}My Dashboard{% endblock %}{% block body %}
+<div class="page-head"><div class="container"><h2 class="mb-1">Namaste, {{ me.name }}</h2><span class="text-muted"><i class="fa-solid fa-house me-1"></i>{{ me.house_no }} &nbsp; <i class="fa-solid fa-phone me-1"></i>{{ me.phone }}</span></div></div>
+<div class="container mt-4">
+<ul class="nav nav-tabs flex-nowrap overflow-auto">
+<li class="nav-item"><button class="nav-link active text-nowrap" data-bs-toggle="tab" data-bs-target="#t1"><i class="fa-solid fa-receipt me-1"></i>Taxes</button></li>
+<li class="nav-item"><button class="nav-link text-nowrap" data-bs-toggle="tab" data-bs-target="#t2"><i class="fa-solid fa-triangle-exclamation me-1"></i>Complaints</button></li>
+<li class="nav-item"><button class="nav-link text-nowrap" data-bs-toggle="tab" data-bs-target="#t3"><i class="fa-solid fa-certificate me-1"></i>Certificates</button></li></ul>
+<div class="tab-content pt-3">
+<div class="tab-pane fade show active" id="t1"><div class="table-responsive"><table class="table align-middle"><thead><tr><th>Tax</th><th>Year</th><th>Amount</th><th>Status</th><th>Mode</th><th></th></tr></thead><tbody>
+{% for t in taxes %}<tr><td>{{ t.type }}</td><td>{{ t.year }}</td><td>₹{{ t.amount|inr }}</td><td><span class="badge {{ 'bg-success' if t.status=='Paid' else 'bg-warning text-dark' }}">{{ t.status }}</span>{% if t.verified %} <i class="fa-solid fa-circle-check text-success" title="Verified"></i>{% endif %}</td><td>{{ t.mode or '—' }}</td>
+<td class="text-nowrap">{% if t.status=='Pending' %}<form method="post" action="/pay/{{ t.id }}" class="d-inline"><button class="btn btn-sm btn-em"><i class="fa-solid fa-qrcode me-1"></i>Pay UPI</button></form> <small class="text-muted d-block d-md-inline">or pay cash at office</small>{% else %}<a class="btn btn-sm btn-outline-success" href="/receipt/{{ t.id }}"><i class="fa-solid fa-download me-1"></i>Receipt</a>{% endif %}</td></tr>
+{% else %}<tr><td colspan="6">No tax bills yet.</td></tr>{% endfor %}</tbody></table></div></div>
+<div class="tab-pane fade" id="t2"><div class="row g-4"><div class="col-lg-5"><form method="post" action="/complaint" class="card card-g p-3"><h5>New complaint</h5>
+<select class="form-select mb-2" name="category">{% for c in CATS %}<option>{{ c }}</option>{% endfor %}</select><textarea class="form-control mb-2" name="description" rows="3" placeholder="Describe the problem" required></textarea><button class="btn btn-em">Submit complaint</button></form></div>
+<div class="col-lg-7"><div class="table-responsive"><table class="table"><thead><tr><th>Category</th><th>Details</th><th>Status</th></tr></thead><tbody>{% for c in complaints %}<tr><td>{{ c.category }}</td><td>{{ c.description }}</td><td><span class="badge bg-{{ {'Pending':'warning text-dark','In Progress':'info','Resolved':'success'}[c.status] }}">{{ c.status }}</span></td></tr>{% else %}<tr><td colspan="3">No complaints.</td></tr>{% endfor %}</tbody></table></div></div></div></div>
+<div class="tab-pane fade" id="t3"><div class="row g-4"><div class="col-lg-5"><form method="post" action="/certificate" class="card card-g p-3"><h5>Apply for certificate</h5>
+<select class="form-select mb-2" name="type">{% for c in CERTS %}<option>{{ c }}</option>{% endfor %}</select><textarea class="form-control mb-2" name="details" rows="3" placeholder="Name, date and other details" required></textarea><button class="btn btn-em">Submit application</button></form></div>
+<div class="col-lg-7"><div class="table-responsive"><table class="table"><thead><tr><th>Type</th><th>Applied</th><th>Status</th></tr></thead><tbody>{% for c in certs %}<tr><td>{{ c.type }}</td><td>{{ c.created|dt }}</td><td><span class="badge bg-secondary">{{ c.status }}</span></td></tr>{% else %}<tr><td colspan="3">No applications.</td></tr>{% endfor %}</tbody></table></div></div></div></div>
+</div></div>{% endblock %}
