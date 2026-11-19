@@ -1,14 +1,24 @@
 """
 Aapla Kabanur - settings (SQLite version).
-No database server needed. The data lives in one file.
-On Render, set DB_PATH to a persistent-disk path, e.g. /var/data/aapla_kabanur.db
+Free Render deployment configuration.
 """
+
 import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.getenv("DB_PATH", os.path.join(BASE_DIR, "aapla_kabanur.db"))
 
-SECRET_KEY = os.getenv("SECRET_KEY", "change-this-secret")
+# Database location
+# Render free tier: temporary writable storage
+DB_PATH = os.getenv(
+    "DB_PATH",
+    "/tmp/aapla_kabanur.db"
+)
+
+# Security
+SECRET_KEY = os.getenv(
+    "SECRET_KEY",
+    "change-this-secret-before-production"
+)
 
 # Weather location (Kabanur, Ichalkaranji)
 WEATHER_LAT = os.getenv("WEATHER_LAT", "16.7035")
